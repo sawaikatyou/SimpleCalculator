@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/disp_num"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="right"
+        android:text="@string/zero"
+        android:textSize="@dimen/display_num_size" />
+
+    <LinearLayout
+        style="@style/CalcLinearTheme">
+
+        <Button
+            android:id="@+id/dec"
+            style="@style/CalcButtonTheme"
+            android:text="@string/dec" />
+
+        <Button
+            android:id="@+id/per"
+            style="@style/CalcButtonTheme"
+            android:text="@string/per" />
+
+        <Button
+            android:id="@+id/clear"
+            style="@style/CalcClearButtonTheme"
+            android:text="@string/clear" />
+
+        <Button
+            android:id="@+id/all_clear"
+            style="@style/CalcAllClearButtonTheme"
+            android:text="@string/all_clear" />
+    </LinearLayout>
+
+    <LinearLayout
+        style="@style/CalcLinearTheme">
+
+        <Button
+            android:id="@+id/seven"
+            style="@style/CalcButtonTheme"
+            android:text="@string/seven" />
+
+        <Button
+            android:id="@+id/eight"
+            style="@style/CalcButtonTheme"
+            android:text="@string/eight" />
+
+        <Button
+            android:id="@+id/nine"
+            style="@style/CalcButtonTheme"
+            android:text="@string/nine" />
+
+        <Button
+            android:id="@+id/plus"
+            style="@style/CalcButtonTheme"
+            android:text="@string/plus" />
+    </LinearLayout>
+
+    <LinearLayout
+        style="@style/CalcLinearTheme">
+
+        <Button
+            android:id="@+id/four"
+            style="@style/CalcButtonTheme"
+            android:text="@string/four" />
+
+        <Button
+            android:id="@+id/five"
+            style="@style/CalcButtonTheme"
+            android:text="@string/five" />
+
+        <Button
+            android:id="@+id/six"
+            style="@style/CalcButtonTheme"
+            android:text="@string/six" />
+
+        <Button
+            android:id="@+id/minus"
+            style="@style/CalcButtonTheme"
+            android:text="@string/minus" />
+    </LinearLayout>
+
+    <LinearLayout
+        style="@style/CalcLinearTheme">
+
+        <Button
+            android:id="@+id/one"
+            style="@style/CalcButtonTheme"
+            android:text="@string/one" />
+
+        <Button
+            android:id="@+id/two"
+            style="@style/CalcButtonTheme"
+            android:text="@string/two" />
+
+        <Button
+            android:id="@+id/three"
+            style="@style/CalcButtonTheme"
+            android:text="@string/three" />
+
+        <Button
+            android:id="@+id/multi"
+            style="@style/CalcButtonTheme"
+            android:text="@string/multi" />
+    </LinearLayout>
+
+    <LinearLayout
+        style="@style/CalcLinearTheme">
+
+        <Button
+            android:id="@+id/zero"
+            style="@style/CalcButtonTheme"
+            android:text="@string/zero" />
+
+        <Button
+            android:id="@+id/dot"
+            style="@style/CalcButtonTheme"
+            android:text="@string/dot" />
+
+        <Button
+            android:id="@+id/equal"
+            style="@style/CalcButtonTheme"
+            android:text="@string/equal" />
+
+        <Button
+            android:id="@+id/div"
+            style="@style/CalcButtonTheme"
+            android:text="@string/div" />
+    </LinearLayout>
+</LinearLayout>
