@@ -1,5 +1,7 @@
 package calculator.sasakik.com.simplecalculator.state;
 
+import android.util.Log;
+
 import calculator.sasakik.com.simplecalculator.model.CalculatorModel;
 import calculator.sasakik.com.simplecalculator.operand.SCOperand;
 import calculator.sasakik.com.simplecalculator.operator.SCOperator;
@@ -10,13 +12,15 @@ import calculator.sasakik.com.simplecalculator.operator.SCOperator;
 
 public class NullCalculatorState implements CalculatorState {
 
+    public static final String TAG = "NullCalculatorState";
+
     @Override
     public void processNumber(Character character, CalculatorModel model) {
-
+        Log.d(TAG, "processOperator() empty");
     }
 
     @Override
-    public void processOperand(SCOperator operand, CalculatorModel model) {
+    public void processOperator(SCOperator operator, CalculatorModel model) {
 
     }
 
@@ -26,7 +30,7 @@ public class NullCalculatorState implements CalculatorState {
     }
 
     @Override
-    public void processPercent(CalculatorModel calculatorModel) {
+    public void processPercent(CalculatorModel model) {
 
     }
 

@@ -1,9 +1,16 @@
 
 package calculator.sasakik.com.simplecalculator.state;
 
+import android.util.Log;
+
+import java.math.BigDecimal;
+
 import calculator.sasakik.com.simplecalculator.model.CalculatorModel;
 import calculator.sasakik.com.simplecalculator.operand.SCOperand;
+import calculator.sasakik.com.simplecalculator.operator.OperatorDivide;
 import calculator.sasakik.com.simplecalculator.operator.SCOperator;
+
+import static calculator.sasakik.com.simplecalculator.operand.SCOperand.TAG;
 
 /**
  * Created by sasakik on 2018/01/06.
@@ -11,10 +18,6 @@ import calculator.sasakik.com.simplecalculator.operator.SCOperator;
 
 public abstract class CalculatorStateTemplate implements CalculatorState {
 
-    @Override
-    public void processNumber(Character character, CalculatorModel model) {
-
-    }
 
     protected SCOperand append(Character character, SCOperand target_operand) {
         String temp;
@@ -23,40 +26,36 @@ public abstract class CalculatorStateTemplate implements CalculatorState {
         } else {
             temp = target_operand.toString() + character;
         }
-        return new SCOperand((String) temp);
+        return new SCOperand(temp);
     }
 
-    @Override
-    public void processOperand(SCOperator operator, CalculatorModel model) {
-        model.mOperator = operator;
-    }
-
-    @Override
-    public void processDecrement(CalculatorModel model) {
+    protected void doDecrementCommon(CalculatorModel model) {
         SCOperand target_operand = getTargetOperand(model);
         if (target_operand != null) {
             String temp = target_operand.toString();
             temp = temp.substring(0, temp.length() - 1);
             if (temp != null && !temp.isEmpty()) {
-                setTargetOperand(model, new SCOperand((String) temp));
+                setTargetOperand(model, new SCOperand(temp));
             } else {
                 setTargetOperand(model, new SCOperand());
             }
         }
     }
 
-    @Override
-    public void processPercent(CalculatorModel calculatorModel) {
+    protected SCOperand doPercentCommon(CalculatorModel model) {
+        SCOperand target_operand = getTargetOperand(model);
+        if (target_operand != null) {
+            OperatorDivide div = new OperatorDivide();
+            return div.eval(target_operand, new SCOperand(100));
+        }
+
+        return new SCOperand();
     }
 
-    @Override
-    public void processResult(CalculatorModel model) {
-
-    }
 
     @Override
     public void processClear(CalculatorModel model) {
-
+        setTargetOperand(model, new SCOperand());
     }
 
     @Override

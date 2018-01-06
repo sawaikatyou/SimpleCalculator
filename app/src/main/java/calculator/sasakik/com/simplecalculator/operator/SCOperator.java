@@ -7,5 +7,5 @@ import calculator.sasakik.com.simplecalculator.operand.SCOperand;
  */
 
 public interface SCOperator {
-    public SCOperand eval(SCOperand valueA, SCOperand valueB);
+    SCOperand eval(SCOperand valueA, SCOperand valueB);
 }
