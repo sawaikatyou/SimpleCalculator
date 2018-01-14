@@ -30,13 +30,13 @@ public class OperatorAddTest extends AndroidTestCase {
     @Test
     public void testEval() {
         OperatorAdd target = new OperatorAdd();
-        final SCOperand valueA = new SCOperand(1);
-        final SCOperand valueB = new SCOperand(2);
-        final SCOperand valueC = new SCOperand(3);
+        final SCOperand value_one = new SCOperand(1);
+        final SCOperand value_two = new SCOperand(2);
+        final SCOperand value_three = new SCOperand(3);
 
-        assertEquals(new SCOperand(3), target.eval(valueA,valueB));
-        assertEquals(new SCOperand(4), target.eval(valueA,valueC));
-        assertEquals(new SCOperand(5), target.eval(valueB,valueC));
-        assertEquals(new SCOperand(5), target.eval(valueC,valueB));
+        assertEquals(new SCOperand(3), target.eval(value_one, value_two));
+        assertEquals(new SCOperand(4), target.eval(value_one, value_three));
+        assertEquals(new SCOperand(5), target.eval(value_two, value_three));
+        assertEquals(new SCOperand(5), target.eval(value_three, value_two));
     }
 }

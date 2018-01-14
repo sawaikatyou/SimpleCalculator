@@ -21,6 +21,14 @@ import com.sasakik.simplecalculator.state.CalculatorStateInputA;
  */
 public class CalculatorModel {
 
+    public static final String TAG = "CalculatorModel";
+
+    /**
+     * 入力タイプ判定
+     * CalculatorState になんのイベントを発行するか？の判定で使用する
+     *
+     * {@link CalculatorState }
+     */
     enum SCINPUTTYPE {
         SCINPUTTYPE_NUMBER,
         SCINPUTTYPE_OPERATOR,
@@ -31,7 +39,9 @@ public class CalculatorModel {
         SCINPUTTYPE_ALLCLEAR,
     }
 
-    public static final String TAG = "CalculatorModel";
+    /**
+     * 現在の計算状態
+     */
     CalculatorState mState;
 
     /**
@@ -43,11 +53,18 @@ public class CalculatorModel {
      * 計算数値B
      */
     public SCOperand mOperandB;
+
+    /**
+     * 現在の演算子
+     */
     public SCOperator mOperator;
 
+    /**
+     * ViewのID値 → SCINPUTTYPE 変換テーブル
+     */
     private static final SparseArray<SCINPUTTYPE> mViewIdToTypeConverter = new SparseArray<>();
-
     static {
+        // 数値系
         mViewIdToTypeConverter.put(R.id.zero, SCINPUTTYPE.SCINPUTTYPE_NUMBER);
         mViewIdToTypeConverter.put(R.id.one, SCINPUTTYPE.SCINPUTTYPE_NUMBER);
         mViewIdToTypeConverter.put(R.id.two, SCINPUTTYPE.SCINPUTTYPE_NUMBER);
@@ -59,7 +76,7 @@ public class CalculatorModel {
         mViewIdToTypeConverter.put(R.id.eight, SCINPUTTYPE.SCINPUTTYPE_NUMBER);
         mViewIdToTypeConverter.put(R.id.nine, SCINPUTTYPE.SCINPUTTYPE_NUMBER);
         mViewIdToTypeConverter.put(R.id.dot, SCINPUTTYPE.SCINPUTTYPE_NUMBER);
-
+        // 数値系
         mViewIdToTypeConverter.put(R.id.plus, SCINPUTTYPE.SCINPUTTYPE_OPERATOR);
         mViewIdToTypeConverter.put(R.id.minus, SCINPUTTYPE.SCINPUTTYPE_OPERATOR);
         mViewIdToTypeConverter.put(R.id.multi, SCINPUTTYPE.SCINPUTTYPE_OPERATOR);
@@ -73,8 +90,10 @@ public class CalculatorModel {
         mViewIdToTypeConverter.put(R.id.all_clear, SCINPUTTYPE.SCINPUTTYPE_ALLCLEAR);
     }
 
+    /**
+     * 数値系ViewのID値 → 数字の変換テーブル
+     */
     private static final SparseArray<Character> mViewIdToNumCharacterConverter = new SparseArray<>();
-
     static {
         mViewIdToNumCharacterConverter.put(R.id.zero, '0');
         mViewIdToNumCharacterConverter.put(R.id.one, '1');
@@ -90,7 +109,6 @@ public class CalculatorModel {
     }
 
     private static final SparseArray<SCOperator> mViewIdToSCOperatorConverter = new SparseArray<>();
-
     static {
         mViewIdToSCOperatorConverter.put(R.id.plus, new OperatorAdd());
         mViewIdToSCOperatorConverter.put(R.id.minus, new OperatorMinus());
