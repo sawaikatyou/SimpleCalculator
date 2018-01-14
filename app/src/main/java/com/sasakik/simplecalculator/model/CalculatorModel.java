@@ -1,3 +1,11 @@
+/*
+ * Copyright (c) 2018. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+ * Morbi non lorem porttitor neque feugiat blandit. Ut vitae ipsum eget quam lacinia accumsan.
+ * Etiam sed turpis ac ipsum condimentum fringilla. Maecenas magna.
+ * Proin dapibus sapien vel ante. Aliquam erat volutpat. Pellentesque sagittis ligula eget metus.
+ * Vestibulum commodo. Ut rhoncus gravida arcu.
+ */
+
 package com.sasakik.simplecalculator.model;
 
 import android.util.Log;
@@ -14,10 +22,12 @@ import com.sasakik.simplecalculator.state.CalculatorState;
 import com.sasakik.simplecalculator.state.CalculatorStateInputA;
 
 /**
+ * 演算モデル
+ *
  * Created by sasakik on 2017/12/23.
  */
-
 public class CalculatorModel {
+
     enum SCINPUTTYPE {
         SCINPUTTYPE_NUMBER,
         SCINPUTTYPE_OPERATOR,
@@ -30,7 +40,15 @@ public class CalculatorModel {
 
     public static final String TAG = "CalculatorModel";
     CalculatorState mState;
+
+    /**
+     * 計算数値A
+     */
     public SCOperand mOperandA;
+
+    /**
+     * 計算数値B
+     */
     public SCOperand mOperandB;
     public SCOperator mOperator;
 

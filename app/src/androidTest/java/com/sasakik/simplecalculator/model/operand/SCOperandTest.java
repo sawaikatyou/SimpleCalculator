@@ -66,6 +66,36 @@ public class SCOperandTest extends AndroidTestCase {
             target = new SCOperand(expected_0_1);
             assertEquals(new BigDecimal("0.1"), target.getValue());
             assertNotSame(unexpected_0_1, target.getdouble());
+
+            // わざと失敗させる
+            target = new SCOperand("hogehoge");
+            assertEquals(new BigDecimal("0"), target.getValue());
+
+        } catch (Exception e) {
+            fail();
+        }
+    }
+
+    public void testEquals() {
+        SCOperand target1;
+        SCOperand target2;
+        Object dummy = new Object();
+
+        try {
+            target1 = new SCOperand("100");
+            target2 = new SCOperand("100");
+
+            assertTrue(target1.equals(target2));
+            assertTrue(target2.equals(target1));
+            assertTrue(target1.equals(target1));
+            assertTrue(target2.equals(target2));
+            // わざと失敗させる
+            target2 = new SCOperand("200");
+            assertFalse(target1.equals(target2));
+            target2 = new SCOperand("100");
+            assertFalse(target1.equals(dummy));
+
+
         } catch (Exception e) {
             fail();
         }
