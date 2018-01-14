@@ -1,4 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ /**
+  ~  colors.xml
+  ~
+  ~  Copyright (c) 2018. sasakik
+  ~
+  ~  This software is released under the MIT License.
+  ~  http://opensource.org/licenses/mit-license.php
+  ~  */
+  -->
+
 <resources>
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>

@@ -1,4 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ /**
+  ~  dimens.xml
+  ~
+  ~  Copyright (c) 2018. sasakik
+  ~
+  ~  This software is released under the MIT License.
+  ~  http://opensource.org/licenses/mit-license.php
+  ~  */
+  -->
+
 <resources>
     <dimen name="display_num_size">48sp</dimen>
 </resources>

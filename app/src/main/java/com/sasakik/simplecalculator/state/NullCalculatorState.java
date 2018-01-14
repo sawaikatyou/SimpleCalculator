@@ -1,3 +1,14 @@
+/*
+ * *
+ *  NullCalculatorState
+ *
+ *  Copyright (c) 2018. sasakik
+ *
+ *  This software is released under the MIT License.
+ *  http://opensource.org/licenses/mit-license.php
+ *
+ */
+
 package com.sasakik.simplecalculator.state;
 
 import android.util.Log;
@@ -9,7 +20,6 @@ import com.sasakik.simplecalculator.operator.SCOperator;
 /**
  * Created by sasakik on 2018/01/06.
  */
-
 public class NullCalculatorState implements CalculatorState {
 
     public static final String TAG = "NullCalculatorState";

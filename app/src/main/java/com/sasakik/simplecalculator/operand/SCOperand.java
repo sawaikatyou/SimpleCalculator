@@ -1,11 +1,11 @@
-/*
- * Copyright (c) 2018. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
- * Morbi non lorem porttitor neque feugiat blandit. Ut vitae ipsum eget quam lacinia accumsan.
- * Etiam sed turpis ac ipsum condimentum fringilla. Maecenas magna.
- * Proin dapibus sapien vel ante. Aliquam erat volutpat. Pellentesque sagittis ligula eget metus.
- * Vestibulum commodo. Ut rhoncus gravida arcu.
- */
+/**
+ SCOperand.java
 
+ Copyright (c) 2018 sasakik
+
+ This software is released under the MIT License.
+ http://opensource.org/licenses/mit-license.php
+ */
 package com.sasakik.simplecalculator.operand;
 
 import android.util.Log;
@@ -13,9 +13,10 @@ import android.util.Log;
 import java.math.BigDecimal;
 
 /**
+ * 演算モデル
+ *
  * Created by sasakik on 2018/01/03.
  */
-
 public class SCOperand {
 
     public static final String TAG = "SCOperand";

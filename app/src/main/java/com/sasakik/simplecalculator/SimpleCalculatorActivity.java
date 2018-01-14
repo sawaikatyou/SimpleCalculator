@@ -1,3 +1,14 @@
+/*
+ * *
+ *  SimpleCalculatorActivity
+ *
+ *  Copyright (c) 2018. sasakik
+ *
+ *  This software is released under the MIT License.
+ *  http://opensource.org/licenses/mit-license.php
+ *
+ */
+
 package com.sasakik.simplecalculator;
 
 import android.support.v7.app.AppCompatActivity;
@@ -9,6 +20,10 @@ import android.widget.TextView;
 import com.sasakik.simplecalculator.model.CalculatorModel;
 import com.sasakik.simplecalculator.state.CalculatorState;
 
+/**
+ * Activityメインクラス
+ *
+ */
 public class SimpleCalculatorActivity extends AppCompatActivity {
 
     public static final String TAG = "SimpleCalculator";
