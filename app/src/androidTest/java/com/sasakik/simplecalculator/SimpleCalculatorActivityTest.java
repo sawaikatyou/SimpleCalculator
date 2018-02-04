@@ -50,6 +50,7 @@ public class SimpleCalculatorActivityTest {
         onView(withId(R.id.disp_num)).check(matches(withText("0")));
     }
 
+    @Test
     public void test_足し算() {
         SimpleCalculatorActivity activity = activityTestRule.launchActivity(null);
 
@@ -70,6 +71,7 @@ public class SimpleCalculatorActivityTest {
         onView(withId(R.id.disp_num)).check(matches(withText("5")));
     }
 
+    @Test
     public void test_引き算() {
         SimpleCalculatorActivity activity = activityTestRule.launchActivity(null);
 
@@ -84,15 +86,15 @@ public class SimpleCalculatorActivityTest {
 
         // 3+2=1
         onView(withId(R.id.three)).perform(click());
-        onView(withId(R.id.plus)).perform(click());
+        onView(withId(R.id.minus)).perform(click());
         onView(withId(R.id.two)).perform(click());
         onView(withId(R.id.equal)).perform(click());
         onView(withId(R.id.disp_num)).check(matches(withText("1")));
     }
 
-    /*
     // 先行TP
-    public void check_start_activity_小数点テスト() {
+    @Test
+    public void test_小数点足し算() {
         SimpleCalculatorActivity activity = activityTestRule.launchActivity(null);
         // "1.2" + "2.8" = "4.0"
         onView(withId(R.id.one)).perform(click());
@@ -107,6 +109,22 @@ public class SimpleCalculatorActivityTest {
         onView(withId(R.id.equal)).perform(click());
         onView(withId(R.id.disp_num)).check(matches(withText("4.0")));
     }
-    */
+
+    @Test
+    public void test_小数点引き算() {
+        SimpleCalculatorActivity activity = activityTestRule.launchActivity(null);
+        // "2.8" - "1.2" = "4.0"
+        onView(withId(R.id.two)).perform(click());
+        onView(withId(R.id.dot)).perform(click());
+        onView(withId(R.id.eight)).perform(click());
+        onView(withId(R.id.disp_num)).check(matches(withText("2.8")));
+        onView(withId(R.id.minus)).perform(click());
+        onView(withId(R.id.one)).perform(click());
+        onView(withId(R.id.dot)).perform(click());
+        onView(withId(R.id.two)).perform(click());
+        onView(withId(R.id.disp_num)).check(matches(withText("1.2")));
+        onView(withId(R.id.equal)).perform(click());
+        onView(withId(R.id.disp_num)).check(matches(withText("1.6")));
+    }
 
 }

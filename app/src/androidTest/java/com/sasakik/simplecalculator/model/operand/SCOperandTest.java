@@ -47,10 +47,9 @@ public class SCOperandTest extends AndroidTestCase {
         }
     }
 
-    /*
-    // 先行TP
+
     @Test
-    public void testConstractor_String() {
+    public void testConstractor_小数点チェック() {
         SCOperand target;
         final double unexpected_0_1 = 0.1f;
 
@@ -66,18 +65,12 @@ public class SCOperandTest extends AndroidTestCase {
             // 最後がドットの場合、フラグが立つ
             target = new SCOperand("1.");
             assertEquals(new BigDecimal("1"), target.getValue());
-            assertTrue(target.containsLastDot());
-
-            // ドットがついている状態で"."付きマージされるテスト
-            target = new SCOperand(target.toString() + (target.containsLastDot() ? "." : "") + "5");
-            assertEquals(new BigDecimal("1.5"), target.getValue());
-            assertFalse(target.containsLastDot());
+            assertTrue(target.containsNextDot());
 
         } catch (Exception e) {
             fail();
         }
     }
-     */
 
     @Test
     public void testConstractor_Bigdecimal() {
@@ -123,6 +116,117 @@ public class SCOperandTest extends AndroidTestCase {
             target2 = new SCOperand("100");
             assertFalse(target1.equals(dummy));
 
+
+        } catch (Exception e) {
+            fail();
+        }
+    }
+
+    @Test
+    public void test_isDotOverLaps() {
+        class SCOperandForTest extends SCOperand {
+            public SCOperandForTest() {
+                super();
+            }
+            public SCOperandForTest(String input) {
+                super(input);
+            }
+
+            public void setNextDot(boolean newvalue) {
+                mContainsNextDot = newvalue;
+            }
+        }
+
+        SCOperandForTest target;
+        final double unexpected_0_1 = 0.1f;
+
+        try {
+            target = new SCOperandForTest();
+
+            // 次回ドット含めるフラグがついている場合、さらなる"."は通さない
+            target.update("100");
+            target.setNextDot(true);
+            assertFalse(target.isDotOverLaps("1"));
+            assertTrue(target.isDotOverLaps(".")); // このケースの場合のみOKとなる
+            // フラグなし状態＝ぜんぶ通す
+            target.setNextDot(false);
+            assertFalse(target.isDotOverLaps("1"));
+            assertFalse(target.isDotOverLaps("."));
+
+            // Value値が小数点含み済みの場合もNGとなる
+            target = new SCOperandForTest("100.0");
+            target.setNextDot(false);
+            assertFalse(target.isDotOverLaps("1"));
+            assertTrue(target.isDotOverLaps("."));
+
+        } catch (Exception e) {
+            fail();
+        }
+    }
+
+    @Test
+    public void test_isValueContainsDot() {
+        class SCOperandForTest extends SCOperand {
+            public SCOperandForTest(String value) {
+                super(value);
+            }
+
+            public void setNextDot(boolean newvalue) {
+                mContainsNextDot = newvalue;
+            }
+        }
+
+        SCOperandForTest target;
+        final double unexpected_0_1 = 0.1f;
+
+        try {
+            target = new SCOperandForTest("100");
+            assertFalse(target.isValueContainsDot());
+
+            target = new SCOperandForTest("100.0");
+            assertTrue(target.isValueContainsDot());
+
+            target = new SCOperandForTest("100.1");
+            assertTrue(target.isValueContainsDot());
+
+
+        } catch (Exception e) {
+            fail();
+        }
+    }
+
+    @Test
+    public void test_update() {
+        SCOperand target;
+        final double unexpected_0_1 = 0.1f;
+
+        try {
+            target = new SCOperand();
+            target.update("100");
+            assertEquals(new BigDecimal(100), target.getValue());
+            assertEquals((double) 100, target.getdouble());
+
+            // ドットを単に設定すると フラグが立つ
+            assertFalse(target.containsNextDot());
+            target.update(".");
+            assertEquals(new BigDecimal("100"), target.getValue());
+            assertTrue(target.containsNextDot());
+
+            // 続けて値を追加することで小数点含み値になる
+            assertTrue(target.containsNextDot());
+            target.update("2");
+            assertEquals(new BigDecimal("100.2"), target.getValue());
+            assertFalse(target.containsNextDot());
+
+            // さらに"."を指定しても無視する
+            target.update(".");
+            assertEquals(new BigDecimal("100.2"), target.getValue());
+            assertFalse(target.containsNextDot());
+
+            // 追加入力すると最後の位置からとなる
+            target.update("3");
+            assertEquals(new BigDecimal("100.23"), target.getValue());
+            assertFalse(target.containsNextDot());
 
         } catch (Exception e) {
             fail();
