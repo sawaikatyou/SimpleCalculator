@@ -33,12 +33,10 @@ public class OperatorDivideTest extends AndroidTestCase {
         final SCOperand valueA = new SCOperand(1);
         final SCOperand valueB = new SCOperand(2);
         final SCOperand valueC = new SCOperand(3);
+        final SCOperand valueD = new SCOperand(4);
 
-        assertEquals(new SCOperand("0.5"), target.eval(valueA,valueB));
-        assertEquals(new SCOperand("0.500"), target.eval(valueA,valueB));
-        assertEquals(new SCOperand("0.333"), target.eval(valueA,valueC));
-        assertEquals(new SCOperand("0.666"), target.eval(valueB,valueC));
-        assertEquals(new SCOperand("1.500"), target.eval(valueC,valueB));
+        assertEquals(new SCOperand("2"), target.eval(valueD, valueB));
+        assertEquals(new SCOperand("3"), target.eval(valueC, valueA));
     }
 
 }

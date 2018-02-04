@@ -1,10 +1,10 @@
 /**
- SCOperand.java
-
- Copyright (c) 2018 sasakik
-
- This software is released under the MIT License.
- http://opensource.org/licenses/mit-license.php
+ * SCOperand.java
+ * <p>
+ * Copyright (c) 2018 sasakik
+ * <p>
+ * This software is released under the MIT License.
+ * http://opensource.org/licenses/mit-license.php
  */
 package com.sasakik.simplecalculator.operand;
 
@@ -14,7 +14,7 @@ import java.math.BigDecimal;
 
 /**
  * 演算モデル
- *
+ * <p>
  * Created by sasakik on 2018/01/03.
  */
 public class SCOperand {
@@ -22,34 +22,22 @@ public class SCOperand {
     public static final String TAG = "SCOperand";
 
     /* データ値本体 */
-    protected boolean mLastCharacterIsDot;
     protected BigDecimal mValue;
 
     public SCOperand() {
         mValue = new BigDecimal(0);
-        mLastCharacterIsDot = false;
     }
 
     public SCOperand(String inputsource) {
-        try {
-            mValue = new BigDecimal(inputsource);
-            if (inputsource.endsWith(".")) {
-                mLastCharacterIsDot = true;
-            }
-        } catch (NumberFormatException e) {
-            mValue = new BigDecimal(0);
-            Log.e(TAG, "constructor failed. invalid inputsource=" + inputsource);
-        }
+        update(inputsource);
     }
 
     public SCOperand(BigDecimal input) {
         mValue = input;
-        mLastCharacterIsDot = false;
     }
 
     public SCOperand(int input) {
         mValue = new BigDecimal(input);
-        mLastCharacterIsDot = false;
     }
 
     public double getdouble() {
@@ -75,7 +63,16 @@ public class SCOperand {
         return false;
     }
 
-    public boolean containsLastDot() {
-        return mLastCharacterIsDot;
+    public void update(String input) {
+        String parameter = input;
+        if (mValue != null) {
+            parameter = mValue.toString() + input;
+        }
+        try {
+            mValue = new BigDecimal(input);
+        } catch (NumberFormatException e) {
+            mValue = new BigDecimal(0);
+            Log.e(TAG, "constructor failed. invalid parameter=" + parameter);
+        }
     }
 }

@@ -39,23 +39,62 @@ public class SimpleCalculatorActivityTest {
     @Test
     public void check_start_activity() {
         SimpleCalculatorActivity activity = activityTestRule.launchActivity(null);
-        /* ここにテストする内容を書く */
-        assertThat(
-                "SimpleCalculatorActivity is running",
-                activity.isFinishing(),
-                Matchers.is(false)
-        );
 
-        /* 1 と打ち込んだらテキストに"1"と出てくる */
+        // 1 と打ち込んだらテキストに"1"と出てくることを確認
         onView(withId(R.id.one)).perform(click());
         onView(withId(R.id.disp_num)).check(matches(withText("1")));
 
-        /* "AC" でクリア */
+        // "AC" で消える
         onView(withId(R.id.disp_num)).check(matches(not(withText("0"))));
         onView(withId(R.id.all_clear)).perform(click());
         onView(withId(R.id.disp_num)).check(matches(withText("0")));
+    }
 
-        /* "1.2" + "2.8" = "4" */
+    public void test_足し算() {
+        SimpleCalculatorActivity activity = activityTestRule.launchActivity(null);
+
+        // 1+1=2
+        onView(withId(R.id.one)).perform(click());
+        onView(withId(R.id.plus)).perform(click());
+        onView(withId(R.id.one)).perform(click());
+        onView(withId(R.id.equal)).perform(click());
+        onView(withId(R.id.disp_num)).check(matches(withText("2")));
+
+        onView(withId(R.id.all_clear)).perform(click()); // "AC" でクリア
+
+        // 2+3=5
+        onView(withId(R.id.two)).perform(click());
+        onView(withId(R.id.plus)).perform(click());
+        onView(withId(R.id.three)).perform(click());
+        onView(withId(R.id.equal)).perform(click());
+        onView(withId(R.id.disp_num)).check(matches(withText("5")));
+    }
+
+    public void test_引き算() {
+        SimpleCalculatorActivity activity = activityTestRule.launchActivity(null);
+
+        // 1+1=0
+        onView(withId(R.id.one)).perform(click());
+        onView(withId(R.id.plus)).perform(click());
+        onView(withId(R.id.one)).perform(click());
+        onView(withId(R.id.equal)).perform(click());
+        onView(withId(R.id.disp_num)).check(matches(withText("2")));
+
+        onView(withId(R.id.all_clear)).perform(click()); // ACでクリア
+
+        // 3+2=1
+        onView(withId(R.id.three)).perform(click());
+        onView(withId(R.id.plus)).perform(click());
+        onView(withId(R.id.two)).perform(click());
+        onView(withId(R.id.equal)).perform(click());
+        onView(withId(R.id.disp_num)).check(matches(withText("1")));
+    }
+
+    /*
+    // 先行TP
+    public void check_start_activity_小数点テスト() {
+        SimpleCalculatorActivity activity = activityTestRule.launchActivity(null);
+        // "1.2" + "2.8" = "4.0"
         onView(withId(R.id.one)).perform(click());
         onView(withId(R.id.dot)).perform(click());
         onView(withId(R.id.two)).perform(click());
@@ -67,7 +106,7 @@ public class SimpleCalculatorActivityTest {
         onView(withId(R.id.disp_num)).check(matches(withText("2.8")));
         onView(withId(R.id.equal)).perform(click());
         onView(withId(R.id.disp_num)).check(matches(withText("4.0")));
-
     }
+    */
 
 }

@@ -61,8 +61,4 @@ public class MockCalculatorStateTemplate extends CalculatorStateTemplate {
         setTargetOperand(model, doPercentCommon(model));
     }
 
-
-    public void call_Append(Character character) {
-        mTestOperand = append(character, mTestOperand);
-    }
 }

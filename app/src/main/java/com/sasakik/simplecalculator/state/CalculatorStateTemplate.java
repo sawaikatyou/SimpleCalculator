@@ -30,16 +30,6 @@ import static com.sasakik.simplecalculator.operand.SCOperand.TAG;
 public abstract class CalculatorStateTemplate implements CalculatorState {
 
 
-    protected SCOperand append(Character character, SCOperand target_operand) {
-        String temp;
-        if (target_operand.containsLastDot()) {
-            temp = target_operand.toString() + "." + character;
-        } else {
-            temp = target_operand.toString() + character;
-        }
-        return new SCOperand(temp);
-    }
-
     protected void doDecrementCommon(CalculatorModel model) {
         SCOperand target_operand = getTargetOperand(model);
         if (target_operand != null) {

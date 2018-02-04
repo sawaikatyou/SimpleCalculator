@@ -18,14 +18,13 @@ import com.sasakik.simplecalculator.operator.SCOperator;
 /**
  * Created by sasakik on 2018/01/06.
  */
-
 public class CalculatorStateInputB extends CalculatorStateTemplate {
     public static final String TAG = "CalculatorStateInputB";
 
     @Override
     public void processNumber(Character character, CalculatorModel model) {
         SCOperand old_opeB = model.mOperandB;
-        model.mOperandB = append(character, old_opeB);
+        model.mOperandB.update(String.valueOf(character));
     }
 
     @Override

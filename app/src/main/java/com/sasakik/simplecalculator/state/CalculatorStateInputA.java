@@ -24,8 +24,7 @@ public class CalculatorStateInputA extends CalculatorStateTemplate {
 
     @Override
     public void processNumber(Character character, CalculatorModel model) {
-        SCOperand old_opeA = model.mOperandA;
-        model.mOperandA = append(character, old_opeA);
+        model.mOperandA.update(String.valueOf(character));
     }
 
     @Override

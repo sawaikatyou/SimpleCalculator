@@ -36,19 +36,6 @@ public class CalculatorStateTemplateTest extends AndroidTestCase {
     /* -------------------------------- */
     /* ここからテストケース本体         */
     /* -------------------------------- */
-    public void testAppend() {
-        CalculatorModel model = new CalculatorModel();
-        MockCalculatorStateTemplate target = new MockCalculatorStateTemplate();
-        target.mTestOperand = new SCOperand("0");
-        assertEquals("0", target.getTargetOperand(model).toString());
-        target.call_Append('1');
-        assertEquals("1", target.getTargetOperand(model).toString());
-
-        target.call_Append('.');
-        target.call_Append('2');
-        assertEquals("1.2", target.getTargetOperand(model).toString());
-    }
-
 
     /* 123.45 が1文字づつ消えていくテスト */
     @Test
@@ -95,9 +82,9 @@ public class CalculatorStateTemplateTest extends AndroidTestCase {
         target.mTestOperand = new SCOperand("123.45");
         assertEquals("123.45", target.getTargetOperand(model).toString());
         target.processPercent(model);
-        assertEquals("1.23", target.getTargetOperand(model).toString());
+        assertEquals("1.2345", target.getTargetOperand(model).toString());
         target.processPercent(model);
-        assertEquals("0.01", target.getTargetOperand(model).toString());
+        assertEquals("0.012345", target.getTargetOperand(model).toString());
 
         /* NULLケース */
         target.processPercent(null);
