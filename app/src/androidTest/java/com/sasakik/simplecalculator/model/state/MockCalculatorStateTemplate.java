@@ -40,7 +40,6 @@ public class MockCalculatorStateTemplate extends CalculatorStateTemplate {
 
     @Override
     public void processNumber(Character character, CalculatorModel model) {
-
     }
 
     @Override
@@ -50,7 +49,6 @@ public class MockCalculatorStateTemplate extends CalculatorStateTemplate {
 
     @Override
     public void processResult(CalculatorModel model) {
-
     }
 
     @Override
@@ -61,5 +59,10 @@ public class MockCalculatorStateTemplate extends CalculatorStateTemplate {
     @Override
     public void processPercent(CalculatorModel model) {
         setTargetOperand(model, doPercentCommon(model));
+    }
+
+
+    public void call_Append(Character character) {
+        mTestOperand = append(character, mTestOperand);
     }
 }
