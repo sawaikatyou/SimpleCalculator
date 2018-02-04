@@ -13,10 +13,11 @@ import com.sasakik.simplecalculator.operator.OperatorMulti;
 import com.sasakik.simplecalculator.operator.SCOperator;
 import com.sasakik.simplecalculator.state.CalculatorState;
 import com.sasakik.simplecalculator.state.CalculatorStateInputA;
+import com.sasakik.simplecalculator.view.SCViewFeedbackListener;
 
 /**
  * 演算モデル
- *
+ * <p>
  * Created by sasakik on 2017/12/23.
  */
 public class CalculatorModel {
@@ -26,7 +27,7 @@ public class CalculatorModel {
     /**
      * 入力タイプ判定
      * CalculatorState になんのイベントを発行するか？の判定で使用する
-     *
+     * <p>
      * {@link CalculatorState }
      */
     enum SCINPUTTYPE {
@@ -38,6 +39,11 @@ public class CalculatorModel {
         SCINPUTTYPE_CLEAR,
         SCINPUTTYPE_ALLCLEAR,
     }
+
+    /**
+     * 描画物更新イベントのリスナー
+     */
+    SCViewFeedbackListener mSCViewFeedbackListener;
 
     /**
      * 現在の計算状態
@@ -63,6 +69,7 @@ public class CalculatorModel {
      * ViewのID値 → SCINPUTTYPE 変換テーブル
      */
     private static final SparseArray<SCINPUTTYPE> mViewIdToTypeConverter = new SparseArray<>();
+
     static {
         // 数値系
         mViewIdToTypeConverter.put(R.id.zero, SCINPUTTYPE.SCINPUTTYPE_NUMBER);
@@ -94,6 +101,7 @@ public class CalculatorModel {
      * 数値系ViewのID値 → 数字の変換テーブル
      */
     private static final SparseArray<Character> mViewIdToNumCharacterConverter = new SparseArray<>();
+
     static {
         mViewIdToNumCharacterConverter.put(R.id.zero, '0');
         mViewIdToNumCharacterConverter.put(R.id.one, '1');
@@ -109,6 +117,7 @@ public class CalculatorModel {
     }
 
     private static final SparseArray<SCOperator> mViewIdToSCOperatorConverter = new SparseArray<>();
+
     static {
         mViewIdToSCOperatorConverter.put(R.id.plus, new OperatorAdd());
         mViewIdToSCOperatorConverter.put(R.id.minus, new OperatorMinus());
@@ -169,10 +178,14 @@ public class CalculatorModel {
                     break;
             }
         }
+        /* 描画物更新イベントを発行*/
+        if (mSCViewFeedbackListener != null) {
+            mSCViewFeedbackListener.onUpdate(mState.output(this));
+        }
     }
 
-    public String getMainWindowCaption() {
-        return mState.output(this);
+    public void setFeedBackTarget(SCViewFeedbackListener feedBackTarget) {
+        mSCViewFeedbackListener = feedBackTarget;
     }
 
 }
