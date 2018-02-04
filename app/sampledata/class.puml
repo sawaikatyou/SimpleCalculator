@@ -1,0 +1,126 @@
+@startuml
+
+
+/'  ここから各クラスの定義 '/
+
+class SimpleCalculatorActivity {
+- CalculatorModel
+}
+
+class CalculatorModel {
++ SCOperand mOperandA
++ SCOperand mOperandB
++ SCOperator mOperator
+- CalculatorState mState
+}
+
+note right
+  演算モデル
+end note
+
+package "データ自体の管理" #FFDDDD {
+    class SCOperand {
+    }
+    note left
+      打ち込まれた
+      値を保持
+    end note
+
+    SimpleCalculatorActivity *-- CalculatorModel : モデル保持
+    CalculatorModel "0..*" o-d- "2" SCOperand : 集約
+}
+
+package "状態管理" #DDFFDD {
+    CalculatorModel --> CalculatorState
+    interface CalculatorState {
+    + {abstract} processNumber(Character character, CalculatorModel model);
+    + {abstract} processOperator(SCOperator operator, CalculatorModel model);
+    + {abstract} processResult(CalculatorModel model);
+    + {abstract} processDecrement(CalculatorModel model);
+    + {abstract} processPercent(CalculatorModel model);
+    + {abstract} processClear(CalculatorModel model);
+    + {abstract} processAllClear(CalculatorModel model);
+    + {abstract} String output(CalculatorModel model);
+    }
+    note left
+      演算モデルから
+      イベントを指定
+    end note
+
+    class CalculatorStateTemplate {
+    }
+    note left
+      状態に依存しない
+      共通処理はここで行う
+    end note
+
+    class CalculatorStateInputA {
+    }
+    note bottom
+      Aの状態
+    end note
+
+    class CalculatorStateInputB {
+    }
+    note bottom
+      Bの状態
+    end note
+
+    class CalculatorStateSelectOperator {
+    }
+    note bottom
+      "+"の状態
+    end note
+
+    class CalculatorStateOutputResult {
+    }
+    note bottom
+      "="の状態
+    end note
+
+    CalculatorState <|.. CalculatorStateTemplate : 実装
+    CalculatorStateTemplate  <|-- CalculatorStateInputA : 継承
+    CalculatorStateTemplate  <|--  CalculatorStateInputB : 継承
+    CalculatorStateTemplate  <|--  CalculatorStateOutputResult : 継承
+    CalculatorStateTemplate  <|--  CalculatorStateSelectOperator : 継承
+
+}
+
+package "計算の実行" #DDFFFF {
+    interface SCOperator {
+    }
+    note right
+      演算モデルや状態管理へ
+      計算の実行を抽象化するためのIF
+    end note
+
+    class OperatorAdd {
+    }
+    note bottom
+      足し算
+    end note
+
+    class OperatorMinus {
+    }
+    note bottom
+      引き算
+    end note
+
+    class OperatorDivide {
+    }
+    note bottom
+      割り算
+    end note
+    class OperatorMulti {
+    }
+    note bottom
+      掛け算
+    end note
+
+    CalculatorModel --> SCOperator
+    SCOperator <|.. OperatorAdd
+    SCOperator <|.. OperatorDivide
+    SCOperator <|.. OperatorMinus
+    SCOperator <|.. OperatorMulti
+}
+@enduml

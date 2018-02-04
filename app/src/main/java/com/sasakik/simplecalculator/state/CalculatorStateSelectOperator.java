@@ -18,7 +18,6 @@ import com.sasakik.simplecalculator.operator.SCOperator;
 /**
  * Created by sasakik on 2018/01/06.
  */
-
 public class CalculatorStateSelectOperator extends CalculatorStateTemplate {
     public static final String TAG = "CalculatorStateSelectOperator";
 
