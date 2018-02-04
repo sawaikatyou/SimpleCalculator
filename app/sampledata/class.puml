@@ -1,137 +1,126 @@
 @startuml
 
-SimpleCalculatorActivity --> InputContract : "inputContract"
-EventListener <|.. MainActivity
-Calc --> EventListener : "event"
-Calc --> State : "state"
-State --> StateContract
-Operation -- Calc
-InputContract <|.. Calc
-StateContract <|.. Calc
 
-State <|.. BaseClearNumState
-BaseClearNumState <|-- BaseInputNumState
-BaseInputNumState <|-- InputNumAState
-BaseInputNumState <|-- InputNumBState
-BaseClearNumState <|-- OperationState
-BaseClearNumState <|-- ResultState
+/'  ここから各クラスの定義 '/
 
 class SimpleCalculatorActivity {
-- ArrayMap<Integer, Integer> numMap
-- ArrayMap<Integer, Operation> opeMap
-+ sendMessage(View view)
-- setNumMap()
-- setOpeMap()
-- updateDisplayNum(String)
+- CalculatorModel
 }
 
-interface State {
-+ {abstract} InputNum(int, StateContract)
-+ {abstract} InputOpe(Operation, StateContract)
-+ {abstract} InputEqual(StateContract)
-+ {abstract} InputDec(StateContract)
-+ {abstract} InputPer(StateContract)
-+ {abstract} InputDot(StateContract)
-+ {abstract} InputClear(StateContract)
-+ {abstract} InputAllClear(StateContract)
+class CalculatorModel {
++ SCOperand mOperandA
++ SCOperand mOperandB
++ SCOperator mOperator
+- CalculatorState mState
 }
 
-abstract class BaseClearNumState {
-+ InputAllClear(StateContract)
-}
-
-abstract class BaseInputNumState {
-+ InputNum(int, StateContract)
-+ InputDec(StateContract)
-+ InputPer(StateContract)
-+ InputDot(StateContract)
-+ InputClear(StateContract)
-+ {abstract} setNum(StateContract)
-}
-
-class InputNumAState {
-+ InputOpe(Operation, StateContract)
-+ InputEqual(StateContract)
-+ setNum(StateContract)
-}
-class InputNumBState {
-+ InputOpe(Operation, StateContract)
-+ InputEqual(StateContract)
-+ setNum(StateContract)
-}
-class OperationState {
-+ InputNum(int, StateContract)
-+ InputOpe(Operation, StateContract)
-+ InputEqual(StateContract)
-+ InputDec(StateContract)
-+ InputPer(StateContract)
-+ InputDot(StateContract)
-+ InputClear(StateContract)
-}
-class ResultState {
-+ InputNum(int, StateContract)
-+ InputOpe(Operation, StateContract)
-+ InputEqual(StateContract)
-+ InputDec(StateContract)
-+ InputPer(StateContract)
-+ InputDot(StateContract)
-+ InputClear(StateContract)
-}
-
-interface InputContract {
-+ {abstract} onInputNum(int)
-+ {abstract} onInputOpe(Operation)
-+ {abstract} onInputEqual() /' tesuto '/
-+ {abstract} onInputDec()
-+ {abstract} onInputPer()
-+ {abstract} onInput()
-+ {abstract} onInputClear()
-+ {abstract} onInputAllClear()
-+ {abstract} setEventListner(EventListener)
-}
-
-interface StateContract {
-
-+ changeState(State)
-+ State getState()
-+ void setNumA();Dot
-+ void setNumB();
-+ void setDisplayNum(int);
-+ void setOperation(Operation);
-+ void updateDisp();
-+ void updateDecToDisplayNum();
-+ void updatePerToDisplay();
-+ void clearDisp();
-+ void allClearNum();
-
-}
-class Calc {
-- BigDecimal numA
-- BigDecimal numB
-- String displayNum
-- Operation ope
-}
-
-interface EventListener {
-+ updateDisp(String)
-}
-
-enum Operation {
-+ PLUS
-+ MINUS
-+ MULTI
-+ DIV
-+ BigDecimal eval(BigDecimal, BigDecimal)
-}
-
-note right of SimpleCalculatorActivity
-    numMap：ボタン用ArrayMap
-    opeMap：四則演算用ArrayMap
+note right
+  演算モデル
 end note
 
-note right of Calc
-    電卓関連の処理は本クラスで実施。
-    Stateによって処理が変わる。
-end note
+package "データ自体の管理" #FFDDDD {
+    class SCOperand {
+    }
+    note left
+      打ち込まれた
+      値を保持
+    end note
 
+    SimpleCalculatorActivity *-- CalculatorModel : モデル保持
+    CalculatorModel "0..*" o-d- "2" SCOperand : 集約
+}
+
+package "状態管理" #DDFFDD {
+    CalculatorModel --> CalculatorState
+    interface CalculatorState {
+    + {abstract} processNumber(Character character, CalculatorModel model);
+    + {abstract} processOperator(SCOperator operator, CalculatorModel model);
+    + {abstract} processResult(CalculatorModel model);
+    + {abstract} processDecrement(CalculatorModel model);
+    + {abstract} processPercent(CalculatorModel model);
+    + {abstract} processClear(CalculatorModel model);
+    + {abstract} processAllClear(CalculatorModel model);
+    + {abstract} String output(CalculatorModel model);
+    }
+    note left
+      演算モデルから
+      イベントを指定
+    end note
+
+    class CalculatorStateTemplate {
+    }
+    note left
+      状態に依存しない
+      共通処理はここで行う
+    end note
+
+    class CalculatorStateInputA {
+    }
+    note bottom
+      Aの状態
+    end note
+
+    class CalculatorStateInputB {
+    }
+    note bottom
+      Bの状態
+    end note
+
+    class CalculatorStateSelectOperator {
+    }
+    note bottom
+      "+"の状態
+    end note
+
+    class CalculatorStateOutputResult {
+    }
+    note bottom
+      "="の状態
+    end note
+
+    CalculatorState <|.. CalculatorStateTemplate : 実装
+    CalculatorStateTemplate  <|-- CalculatorStateInputA : 継承
+    CalculatorStateTemplate  <|--  CalculatorStateInputB : 継承
+    CalculatorStateTemplate  <|--  CalculatorStateOutputResult : 継承
+    CalculatorStateTemplate  <|--  CalculatorStateSelectOperator : 継承
+
+}
+
+package "計算の実行" #DDFFFF {
+    interface SCOperator {
+    }
+    note right
+      演算モデルや状態管理へ
+      計算の実行を抽象化するためのIF
+    end note
+
+    class OperatorAdd {
+    }
+    note bottom
+      足し算
+    end note
+
+    class OperatorMinus {
+    }
+    note bottom
+      引き算
+    end note
+
+    class OperatorDivide {
+    }
+    note bottom
+      割り算
+    end note
+    class OperatorMulti {
+    }
+    note bottom
+      掛け算
+    end note
+
+    CalculatorModel --> SCOperator
+    SCOperator <|.. OperatorAdd
+    SCOperator <|.. OperatorDivide
+    SCOperator <|.. OperatorMinus
+    SCOperator <|.. OperatorMulti
+}
 @enduml
