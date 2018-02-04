@@ -5,7 +5,15 @@
 
 class SimpleCalculatorActivity {
 - CalculatorModel
++ onUpdate(String value)
 }
+
+class SCViewFeedbackListener {
+    + onUpdate(String value)
+}
+
+SimpleCalculatorActivity <|.. SCViewFeedbackListener : 実装
+SCViewFeedbackListener <.. CalculatorModel : 描画更新イベントの通知
 
 class CalculatorModel {
 + SCOperand mOperandA
@@ -17,6 +25,7 @@ class CalculatorModel {
 note right
   演算モデル
 end note
+
 
 package "データ自体の管理" #FFDDDD {
     class SCOperand {
